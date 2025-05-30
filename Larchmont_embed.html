@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Larchmont Building Permit</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; text-align: center; }
+    .icon-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .department {
+      cursor: pointer;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: #003366;
+      border-radius: 50%;
+      color: white;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 30%;
+      width: 40%;
+      background: white;
+      border: 2px solid #003366;
+      padding: 20px;
+      box-shadow: 0 0 15px gray;
+      z-index: 1000;
+      text-align: left;
+    }
+    .popup h3 { color: #003366; }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 500;
+    }
+    .close-btn {
+      margin-top: 20px;
+      background: #003366;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .sigla { font-weight: bold; }
+  </style>
+</head>
+<body>
+<h2>Obtaining Building Permit</h2>
+<p>
+<strong>Village of Larchmont NY</strong><br/>
+120 Larchmont Avenue, Larchmont, New York 10538<br/>
+Building Department Hours: Monday to Friday, 9 a.m. to 2 p.m.<br/>
+Phone: (914) 834-6230<br/>
+Email: <a href="mailto:building@larchmontny.gov">building@larchmontny.gov</a>
+</p>
+<div class="icon-grid">
+<div class="row">
+<div class="department" onclick="showPopup('building')">
+<div class="icon"><span class="sigla">BD</span></div>
+<div class="label">Building Dept</div>
+</div>
+</div>
+<div class="row">
+<div class="department" onclick="showPopup('code')">
+<div class="icon"><span class="sigla">CC</span></div>
+<div class="label">Code Compliance<br/>(FAR)</div>
+</div>
+<div class="department" onclick="showPopup('planning')">
+<div class="icon"><span class="sigla">PL</span></div>
+<div class="label">Planning</div>
+</div>
+<div class="department" onclick="showPopup('arb')">
+<div class="icon"><span class="sigla">AR</span></div>
+<div class="label">ARB</div>
+</div>
+<div class="department" onclick="showPopup('zoning')">
+<div class="icon"><span class="sigla">ZN</span></div>
+<div class="label">Zoning</div>
+</div>
+<div class="department" onclick="showPopup('swec')">
+<div class="icon"><span class="sigla">SW</span></div>
+<div class="label">SWEC / SWPP</div>
+</div>
+</div>
+<div class="row" style="justify-content: center; margin-top: 20px;">
+<div class="department" onclick="showPopup('complete')" style="display: flex; flex-direction: column; align-items: center;">
+<div class="icon" style="background: green;"><span class="sigla">✅</span></div>
+<div class="label">Complete Application</div>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="hidePopup()"></div>
+<!-- Popups -->
+<div class="popup" id="popup-building">
+<h3>Building Department</h3>
+<p><a href="https://cms2.revize.com/revize/larchmont/Departments/Building/Applications/Construction%20Permits/Building%20Permit%20Application%20and%20Instructions%202024-May.pdf" target="_blank">Download Building Permit Application</a></p>
+<p><strong>Signatures Required:</strong></p>
+<ul><li>✔️ Applicant (Owner/ Contractor/ Architect) (notarized)</li></ul>
+<button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-code">
+<h3>Code Compliance Worksheet</h3>
+<p><a href="https://www.larchmontny.gov/Departments/Building/Applications/Zoning%20Planning%20ARB/LARCHMONT%20CODE%20COMPLIANCE%20WORKSHEET.pdf" target="_blank">Download Worksheet</a></p>
+<p>This worksheet must be completed to ensure your project complies with Village zoning regulations.</p>
+<p><strong>Signatures Required:</strong></p><ul><li>✔️ Owner/P.E./R.A (non notorized)</li></ul><button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-planning">
+<h3>Planning Consultant Meeting</h3>
+<p><a href="https://www.larchmontny.gov/Planning%20Consultant%20Application%202024.pdf" target="_blank">Download Planning Application</a></p>
+<p>For pre-submission consultation regarding subdivision, development or lot line issues.</p>
+<p><strong>Signatures Required:</strong></p><ul><li>✔️ Owner and Applicant (non notorized)</li></ul><button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-arb">
+<h3>Architectural Review Board</h3>
+<p><a href="https://cms2.revize.com/revize/larchmont/ARB%20Application%202024-2.pdf" target="_blank">Download ARB Application</a></p>
+<p>Required for any external alterations to structures, including siding, windows, decks, porches, and fences.</p>
+<p><strong>Signatures Required:</strong></p><ul><li>✔️ Applicant (Owner/ Contractor/ Architect) (notarized)</li></ul><button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-zoning">
+<h3>Zoning Board of Appeals</h3>
+<p><a href="https://cms2.revize.com/revize/larchmont/ZBA%20Application%202024.pdf" target="_blank">Download ZBA Application</a></p>
+<p>Use when seeking variances to local zoning code, such as setbacks, height limits, or lot coverage.</p>
+<p><strong>Signatures Required:</strong></p><ul><li>✔️ Applicant (notarized)</li><li>✔️ Owner (notarized)</li></ul><button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-swec">
+<h3>SWEC / SWPP Application</h3>
+<p><a href="https://www.larchmontny.gov/SWEC%20Application%202024.pdf" target="_blank">Download SWEC / SWPP Form</a></p>
+<p>This permit is required for any construction activity involving:
+    <ul>
+<li>Land disturbance ≥ 500 sq ft</li>
+<li>Land disturbance &lt; 500 sq ft as part of a larger common plan</li>
+</ul>
+</p>
+<p><strong>Signatures Required:</strong></p>
+<ul><li>✔️ Applicant (Owner/ Contractor/ Architect) (non notorized)</li></ul>
+<button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<div class="popup" id="popup-complete">
+<h3>Complete Application Checklist</h3>
+<ul style="font-size: 15px;">
+<li>□ Permit Application</li>
+<li>□ Plans and Specifications (Two (2) Hard Copies) - FOLDED / NOT ROLL</li>
+<li>□ Contractor's License &amp; Insurance (Larchmont listed as Additional Insured)</li>
+<li>□ <a href="https://www.larchmontny.gov/departments/building/applications.php#outer-333:~:text=1%20document-,Building%20Department%20Fees%20%26%20Charges,-Building%20Department%20Fees" target="_blank">Fees per Master Fee Schedule</a></li>
+<li>□ Trade Permits (Plumbing, Electrical)</li>
+<li>□ Special Inspections (if applicable)</li>
+<li>□ Fire Code Compliance</li>
+<li>□ Code Compliance Worksheet</li>
+<li>□ Survey/Site Plan (IF EXTERIOR)</li>
+<li>□ SWEC + Stormwater Plan (2 Hard Copies + 1 PDF) (IF EXTERIOR)</li>
+<li>□ Zoning, Planning &amp; ARB Approvals (IF EXTERIOR)</li>
+</ul>
+<button class="close-btn" onclick="hidePopup()">Close</button>
+</div>
+<script>
+  function showPopup(id) {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popup-' + id).style.display = 'block';
+  }
+  function hidePopup() {
+    document.getElementById('overlay').style.display = 'none';
+    document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+  }
+</script>
+
+<p style="margin-top: 40px;">
+  For more information, visit the official website: 
+  <a href="https://www.larchmontny.gov/departments/building/applications.php#outer-106" target="_blank">
+    Larchmont Building Department
+  </a>
+</p>
+
+</body>
+</html>
